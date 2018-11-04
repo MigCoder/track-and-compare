@@ -3,30 +3,49 @@ import { findDOMNode } from 'react-dom'
 import { Motion, presets, spring } from 'react-motion'
 import { Listing } from '../../models/listing'
 import { ListingCard } from '../listing.card/listing.card'
+import classNames from 'classnames'
+import * as interact from 'interactjs'
 import './listing.compare.selector.scss'
 
 type Props = {
   listing: Listing
+  listingB?: Listing
   expanded: boolean
+  onListingBSelected: (listingId: string) => void
   onToggle?: () => void
 }
 
 type State = {
-  listingB?: Listing
+  dragging: boolean
   containerHeight: number
 }
 
 export class ListingCompareSelector extends React.Component<Props, State> {
   public state = {
+    dragging: false,
     containerHeight: 0
   }
 
-  private containerRef: any;
+  private containerRef: any
 
-  public componentDidMount(){
-    const container = findDOMNode(this.containerRef) as HTMLElement;
+  public componentDidMount() {
+    const container = findDOMNode(this.containerRef) as HTMLElement
     this.setState({
       containerHeight: container.getBoundingClientRect().height
+    })
+
+    interact(container).dropzone({
+      overlap: 0.2,
+      ondragenter: () => {
+        this.setState({dragging: true})
+      },
+      ondragleave: () => {
+        this.setState({dragging: false})
+      },
+      ondrop: (event) => {
+        this.setState({dragging: false})
+        this.props.onListingBSelected(event.relatedTarget.getAttribute('listingId'))
+      }
     })
   }
 
@@ -37,14 +56,16 @@ export class ListingCompareSelector extends React.Component<Props, State> {
   }
 
   public render() {
-    const {containerHeight} = this.state
-    const {listing, expanded} = this.props
+    const {containerHeight, dragging} = this.state
+    const {listing, listingB, expanded} = this.props
 
     return (
       <Motion style={{offsetY: spring(expanded ? -containerHeight + 50 : 0, presets.wobbly)}}>
         {
           ({offsetY}) =>
-            <div className='listing-compare-selector border border-3'
+            <div className={`listing-compare-selector border border-3 ${classNames({
+              dragging
+            })}`}
                  style={{transform: `translateY(${offsetY}px)`}}
                  ref={ref => this.containerRef = ref}>
               <h2>Compare listing</h2>
@@ -59,10 +80,11 @@ export class ListingCompareSelector extends React.Component<Props, State> {
                 </Motion>
               </div>
               <div className='listing-cards d-inline-flex flex-nowrap'>
-                {
-                  <ListingCard listing={listing}/>
-                }
+                <ListingCard listing={listing}/>
+                <div className="separator">vs</div>
+                <ListingCard listing={dragging ? undefined : listingB}/>
               </div>
+              <button className="btn-large">Compare!</button>
             </div>
         }
       </Motion>

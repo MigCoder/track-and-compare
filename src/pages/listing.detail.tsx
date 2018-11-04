@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { ListingCompareSelector } from '../components/listing.compare.selector/listing.compare.selector'
 import { TrackContainer } from '../components/track.container/track.container'
+import { TestData } from '../database/test.data'
 import { Listing } from '../models/listing'
 import classNames from 'classnames'
 import { FakeMap } from '../components/map/fake.map'
@@ -12,6 +13,7 @@ type Props = {
 }
 
 type State = {
+  listingB?: Listing,
   trackContainerVisible: boolean
   compareSelectorVisible: boolean
 }
@@ -19,7 +21,8 @@ type State = {
 export class ListingDetail extends React.Component<Props, State> {
   public state = {
     trackContainerVisible: false,
-    compareSelectorVisible: false
+    compareSelectorVisible: false,
+    listingB: undefined,
   }
 
   public toggleTrackContainer = () => {
@@ -42,7 +45,7 @@ export class ListingDetail extends React.Component<Props, State> {
   }
 
   public render() {
-    const {trackContainerVisible, compareSelectorVisible} = this.state
+    const {trackContainerVisible, compareSelectorVisible, listingB} = this.state
     const {listing, recentViewedListings} = this.props
     return (
       <div className='listing-detail'>
@@ -92,8 +95,12 @@ export class ListingDetail extends React.Component<Props, State> {
                         onToggle={this.toggleTrackContainer}/>
         <ListingCompareSelector
           listing={listing}
+          listingB={listingB}
           expanded={compareSelectorVisible}
-          onToggle={this.toggleCompareSelector}/>
+          onToggle={this.toggleCompareSelector}
+          onListingBSelected={(name) => this.setState({
+            listingB: TestData.find(x => x.name === name)
+          })}/>
       </div>
     )
   }

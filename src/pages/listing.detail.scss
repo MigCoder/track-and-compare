@@ -1,0 +1,40 @@
+@import '../styles/mixins';
+
+.listing-detail {
+  padding: 6rem 0;
+
+  & > img, .detail-container {
+    margin: 0 auto;
+    max-width: 70%;
+    display: block;
+  }
+
+  .detail-container {
+    display: flex;
+    margin-bottom: 5rem;
+
+    @include phone {
+      display: block;
+    }
+
+    .basic-info {
+      flex-basis: 70%;
+    }
+
+    .contact-agent {
+    }
+  }
+
+  .mask {
+    position: fixed;
+    transition: background-color .3s;
+
+    &.show {
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, .5);
+    }
+  }
+}

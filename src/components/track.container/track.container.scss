@@ -1,0 +1,36 @@
+.track-container {
+  padding: 3rem 3rem 6rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50vh;
+  background-color: white;
+  z-index: 2;
+  overflow: visible;
+
+  .listing-cards {
+    width: 100%;
+    overflow-x: auto;
+    padding: 3rem 0;
+    position: relative;
+    z-index: 2;
+
+    &.dragging {
+      overflow: visible;
+    }
+  }
+
+  .switcher {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0;
+    z-index: 1;
+
+    i {
+      cursor: pointer;
+      font-size: 40px;
+    }
+  }
+}
