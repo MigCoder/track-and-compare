@@ -9,6 +9,7 @@ class App extends React.Component {
       <div className="App container-fluid">
         <ListingDetail listing={TestData[0]}
                        recentViewedListings={TestData}/>
+        {/*<Listings listings={TestData}/>*/}
       </div>
     )
   }

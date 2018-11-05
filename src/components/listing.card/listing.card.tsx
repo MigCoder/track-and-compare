@@ -1,5 +1,7 @@
 import * as React from 'react'
+import classNames from 'classnames'
 import { findDOMNode } from 'react-dom'
+import { getListingByName } from '../../database/test.data'
 import { Listing } from '../../models/listing'
 import './listing.card.scss'
 import * as interact from 'interactjs'
@@ -9,10 +11,20 @@ type Props = {
   listing?: Listing
   onDragStart?: () => void
   onDragEnd?: (listing?: Listing) => void
+  onListingFulfilled?: (listing: Listing) => void
 }
 
-export class ListingCard extends React.Component<Props> {
+type State = {
+  dragActive: boolean
+}
+
+export class ListingCard extends React.Component<Props, State> {
+
+  public state = {
+    dragActive: false
+  }
   private cardRef: any
+  private cardPlaceholderRef: any
 
   public componentDidMount() {
     if (this.cardRef && this.props.draggable) {
@@ -59,12 +71,33 @@ export class ListingCard extends React.Component<Props> {
           onmove: dragMoveListener,
         })
     }
+
+    const cardPlaceholder = findDOMNode(this.cardPlaceholderRef) as HTMLElement
+    if (cardPlaceholder) {
+      interact(cardPlaceholder).dropzone({
+        overlap: 0.2,
+        ondragenter: () => {
+          this.setState({dragActive: true})
+        },
+        ondragleave: () => {
+          this.setState({dragActive: false})
+        },
+        ondrop: (event) => {
+          this.setState({dragActive: false})
+          if (this.props.onListingFulfilled) {
+            const listing = getListingByName(event.relatedTarget.getAttribute('listingId'))
+            this.props.onListingFulfilled(listing)
+          }
+        }
+      })
+    }
   }
 
   public render() {
+    const {dragActive} = this.state
     const {listing} = this.props
 
-    if (listing) {
+    if (listing && !dragActive) {
       return (
         <div className='card listing-card' ref={ref => this.cardRef = ref}>
           <img src={listing.medias[0]} alt={listing.name}/>
@@ -76,7 +109,10 @@ export class ListingCard extends React.Component<Props> {
       )
     } else {
       return (
-        <div className='listing-card-place-holder border-dashed border-thick'>
+        <div className={classNames('listing-card-place-holder border-dashed border-thick', {
+          'drag-active': dragActive
+        })}
+             ref={ref => this.cardPlaceholderRef = ref}>
           Drop here to compare
         </div>
       )

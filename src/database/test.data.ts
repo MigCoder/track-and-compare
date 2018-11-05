@@ -1,4 +1,10 @@
 import { Listing } from '../models/listing'
+import * as img1 from '../assets/imgs/1.jpg'
+import * as img2 from '../assets/imgs/2.jpg'
+import * as img3 from '../assets/imgs/3.jpg'
+import * as img4 from '../assets/imgs/4.jpg'
+import * as img5 from '../assets/imgs/5.jpg'
+import * as img6 from '../assets/imgs/6.jpg'
 
 export const TestData: Listing[] = [
   {
@@ -11,9 +17,7 @@ export const TestData: Listing[] = [
       'Pet friendly',
       'Cloak room'
     ],
-    medias: [
-      'https://dqbasmyouzti2.cloudfront.net/assets/content/cache/made/content/images/articles/Office_Buildings_Demand_Response_XL_721_420_80_s_c1.jpg'
-    ]
+    medias: [img1]
   },
   {
     name: 'Property B',
@@ -23,9 +27,7 @@ export const TestData: Listing[] = [
       'Pet friendly',
       'Cloak room'
     ],
-    medias: [
-      'https://dqbasmyouzti2.cloudfront.net/assets/content/cache/made/content/images/articles/Office_Buildings_Demand_Response_XL_721_420_80_s_c1.jpg'
-    ]
+    medias: [img2]
   },
   {
     name: 'Property C',
@@ -35,9 +37,7 @@ export const TestData: Listing[] = [
       'Pet friendly',
       'Cloak room'
     ],
-    medias: [
-      'https://dqbasmyouzti2.cloudfront.net/assets/content/cache/made/content/images/articles/Office_Buildings_Demand_Response_XL_721_420_80_s_c1.jpg'
-    ]
+    medias: [img3]
   },
   {
     name: 'Property D',
@@ -47,9 +47,7 @@ export const TestData: Listing[] = [
       'Pet friendly',
       'Cloak room'
     ],
-    medias: [
-      'https://dqbasmyouzti2.cloudfront.net/assets/content/cache/made/content/images/articles/Office_Buildings_Demand_Response_XL_721_420_80_s_c1.jpg'
-    ]
+    medias: [img4]
   },
   {
     name: 'Property E',
@@ -59,9 +57,7 @@ export const TestData: Listing[] = [
       'Pet friendly',
       'Cloak room'
     ],
-    medias: [
-      'https://dqbasmyouzti2.cloudfront.net/assets/content/cache/made/content/images/articles/Office_Buildings_Demand_Response_XL_721_420_80_s_c1.jpg'
-    ]
+    medias: [img5]
   },
   {
     name: 'Property F',
@@ -71,8 +67,10 @@ export const TestData: Listing[] = [
       'Pet friendly',
       'Cloak room'
     ],
-    medias: [
-      'https://dqbasmyouzti2.cloudfront.net/assets/content/cache/made/content/images/articles/Office_Buildings_Demand_Response_XL_721_420_80_s_c1.jpg'
-    ]
+    medias: [img6]
   }
 ]
+
+export function getListingByName(name: string): Listing {
+  return TestData.find(x => x.name === name)!
+}

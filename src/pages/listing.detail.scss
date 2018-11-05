@@ -2,15 +2,17 @@
 
 .listing-detail {
   padding: 6rem 0;
-
   & > img, .detail-container {
     margin: 0 auto;
-    max-width: 70%;
     display: block;
+  }
+  & > img {
+    max-width: 50%;
   }
 
   .detail-container {
     display: flex;
+    max-width: 70%;
     margin-bottom: 5rem;
 
     @include phone {

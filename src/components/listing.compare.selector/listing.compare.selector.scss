@@ -8,23 +8,16 @@
   background-color: white;
   z-index: 1;
 
-  &.dragging {
-    *:not(.listing-cards):not(.listing-card-place-holder) {
-      filter: blur(5px);
-    }
-  }
-
   .listing-cards {
     width: 100%;
-    overflow-x: auto;
-    overflow-y: hidden;
     padding: 3rem 0;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
 
-    .separator {
-      width: 50px;
+    .listing-card, .listing-card-place-holder {
+      margin-bottom: 2rem;
     }
   }
 

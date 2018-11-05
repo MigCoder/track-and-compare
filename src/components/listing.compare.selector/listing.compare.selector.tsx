@@ -3,7 +3,6 @@ import { findDOMNode } from 'react-dom'
 import { Motion, presets, spring } from 'react-motion'
 import { Listing } from '../../models/listing'
 import { ListingCard } from '../listing.card/listing.card'
-import classNames from 'classnames'
 import * as interact from 'interactjs'
 import './listing.compare.selector.scss'
 
@@ -18,12 +17,14 @@ type Props = {
 type State = {
   dragging: boolean
   containerHeight: number
+  compareCards: Listing[]
 }
 
 export class ListingCompareSelector extends React.Component<Props, State> {
   public state = {
     dragging: false,
-    containerHeight: 0
+    containerHeight: 0,
+    compareCards: [] as Listing[]
   }
 
   private containerRef: any
@@ -57,16 +58,14 @@ export class ListingCompareSelector extends React.Component<Props, State> {
   }
 
   public render() {
-    const {containerHeight, dragging} = this.state
-    const {listing, listingB, expanded} = this.props
+    const {containerHeight, compareCards} = this.state
+    const {expanded} = this.props
 
     return (
       <Motion style={{offsetY: spring(expanded ? -containerHeight + 50 : 0, presets.wobbly)}}>
         {
           ({offsetY}) =>
-            <div className={`listing-compare-selector border border-3 ${classNames({
-              dragging
-            })}`}
+            <div className={`listing-compare-selector border border-3`}
                  style={{transform: `translateY(${offsetY}px)`}}
                  ref={ref => this.containerRef = ref}>
               <h2>Compare listing</h2>
@@ -80,12 +79,21 @@ export class ListingCompareSelector extends React.Component<Props, State> {
                   }
                 </Motion>
               </div>
-              <div className='listing-cards d-inline-flex flex-nowrap'>
-                <ListingCard listing={listing}/>
-                <div className="separator">vs</div>
-                <ListingCard listing={dragging ? undefined : listingB}/>
+              <div className='listing-cards d-inline-flex'>
+                {
+                  [0, 1, 2, 3].map((card, index) =>
+                    <ListingCard key={index}
+                                 listing={compareCards[index]}
+                                 onListingFulfilled={(listing) => {
+                                   compareCards[index] = listing
+                                   this.forceUpdate()
+                                 }}/>)
+                }
               </div>
-              <button className="btn-large">Compare!</button>
+              <button className="btn-large"
+                      disabled={compareCards.filter(x => !!x).length < 2}>
+                Compare!
+              </button>
             </div>
         }
       </Motion>

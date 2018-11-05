@@ -5,9 +5,11 @@
   height: 172px;
   margin-right: 2rem;
   position: relative;
+  text-shadow: 2px 1px 1px #000000;
   img {
+    height: 172px;
     max-width: 100%;
-    transition: .3s filter;
+    object-fit: cover;
   }
   .info {
     position: absolute;
@@ -19,18 +21,16 @@
     color: white;
     background: rgba(0, 0, 0, .2);
   }
-
-  &:hover {
-    img {
-      //filter: blur(1px);
-    }
-  }
 }
 
 .listing-card-place-holder {
-  cursor: pointer;
   min-width: 300px;
   width: 300px;
   text-align: center;
   line-height: 172px;
+
+  &.drag-active {
+    border-color: red;
+    box-shadow: 15px 28px 25px -18px rgba(0,0,0,.2);
+  }
 }
