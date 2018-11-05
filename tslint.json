@@ -12,9 +12,12 @@
     "jsx-no-lambda": false,
     "no-shadowed-variable": false
   },
+  "jsRules": {
+    "no-console": false
+  },
   "linterOptions": {
     "exclude": [
-      "config/**/*.js",
+      "**/*.js",
       "node_modules/**/*.ts",
       "coverage/lcov-report/*.js"
     ]
