@@ -33,6 +33,7 @@ export class ListingCompareSelector extends React.Component<Props, State> {
     this.setState({
       containerHeight: container.getBoundingClientRect().height
     })
+    container.style.bottom = `-${container.getBoundingClientRect().height - 50}px`
 
     interact(container).dropzone({
       overlap: 0.2,
