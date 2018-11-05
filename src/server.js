@@ -5,4 +5,4 @@ const path = require('path');
 
 app.use("/", expressStaticGzip(path.resolve(__dirname, "../build"), {}));
 
-app.listen(3000);
+app.listen(process.env.PORT);
