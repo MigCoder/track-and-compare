@@ -1,0 +1,11 @@
+.listings {
+  padding: 4rem;
+
+  .filters {
+    display: flex;
+    margin-bottom: 4rem;
+    select {
+      margin-right: 3rem;
+    }
+  }
+}
