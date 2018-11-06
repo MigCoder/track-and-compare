@@ -3,28 +3,24 @@ import { findDOMNode } from 'react-dom'
 import { Motion, presets, spring } from 'react-motion'
 import { Listing } from '../../models/listing'
 import { ListingCard } from '../listing.card/listing.card'
-import * as interact from 'interactjs'
 import './listing.compare.selector.scss'
 
 type Props = {
-  listing: Listing
-  listingB?: Listing
   expanded: boolean
-  onListingBSelected: (listingId: string) => void
   onToggle?: () => void
 }
 
 type State = {
   dragging: boolean
   containerHeight: number
-  compareCards: Listing[]
+  compareCards: Array<Listing | undefined>
 }
 
 export class ListingCompareSelector extends React.Component<Props, State> {
   public state = {
     dragging: false,
     containerHeight: 0,
-    compareCards: [] as Listing[]
+    compareCards: [] as Array<Listing | undefined>
   }
 
   private containerRef: any
@@ -35,20 +31,6 @@ export class ListingCompareSelector extends React.Component<Props, State> {
       containerHeight: container.getBoundingClientRect().height
     })
     container.style.bottom = `-${container.getBoundingClientRect().height - 50}px`
-
-    interact(container).dropzone({
-      overlap: 0.2,
-      ondragenter: () => {
-        this.setState({dragging: true})
-      },
-      ondragleave: () => {
-        this.setState({dragging: false})
-      },
-      ondrop: (event) => {
-        this.setState({dragging: false})
-        this.props.onListingBSelected(event.relatedTarget.getAttribute('listingId'))
-      }
-    })
   }
 
   public toggle = () => {
@@ -87,7 +69,12 @@ export class ListingCompareSelector extends React.Component<Props, State> {
                                  onListingFulfilled={(listing) => {
                                    compareCards[index] = listing
                                    this.forceUpdate()
-                                 }}/>)
+                                 }}
+                                 onListingClear={() => {
+                                   compareCards[index] = undefined
+                                   this.forceUpdate()
+                                 }}/>
+                  )
                 }
               </div>
               <button className="btn-large"

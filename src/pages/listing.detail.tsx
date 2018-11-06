@@ -1,54 +1,43 @@
 import * as React from 'react'
-import { ListingCompareSelector } from '../components/listing.compare.selector/listing.compare.selector'
-import { TrackContainer } from '../components/track.container/track.container'
+import { match } from 'react-router'
+import { Link } from 'react-router-dom'
+import { convertNameToUrl } from '../common/helper'
+import { RecentViewedListings } from '../database/recent.viewed.listings'
 import { TestData } from '../database/test.data'
 import { Listing } from '../models/listing'
-import classNames from 'classnames'
 import { FakeMap } from '../components/map/fake.map'
 import './listing.detail.scss'
 
 type Props = {
-  listing: Listing,
-  recentViewedListings: Listing[]
+  match?: match<{ name: string }>
 }
 
 type State = {
-  listingB?: Listing,
-  trackContainerVisible: boolean
-  compareSelectorVisible: boolean
+  listing: Listing,
 }
 
 export class ListingDetail extends React.Component<Props, State> {
   public state = {
-    trackContainerVisible: false,
-    compareSelectorVisible: false,
-    listingB: undefined,
+    listing: new Listing()
   }
 
-  public toggleTrackContainer = () => {
-    this.setState({
-      trackContainerVisible:
-        !this.state.trackContainerVisible
-    })
+  public componentWillMount() {
+    const listing = TestData.find(x => convertNameToUrl(x.name) === this.props.match!.params.name)!
+    this.setState({listing})
+    RecentViewedListings.push(listing)
   }
 
-  public toggleCompareSelector = () => {
-    const compareSelectorVisible = !this.state.compareSelectorVisible
-    if (compareSelectorVisible) {
-      this.setState({
-        trackContainerVisible: true
-      })
-    }
-    this.setState({
-      compareSelectorVisible
-    })
+  public componentDidMount() {
+    document.body.scrollTo(0, 0)
   }
 
   public render() {
-    const {trackContainerVisible, compareSelectorVisible, listingB} = this.state
-    const {listing, recentViewedListings} = this.props
+    const {listing} = this.state
     return (
       <div className='listing-detail'>
+        <Link to='/'>
+          <button className="paper-btn">{'< Back'}</button>
+        </Link>
         <img src={listing.medias![0]} alt={listing.name}/>
         <div className='detail-container'>
           <div className='basic-info'>
@@ -89,18 +78,6 @@ export class ListingDetail extends React.Component<Props, State> {
           </div>
         </div>
         <FakeMap/>
-        <div className={classNames('mask', {show: trackContainerVisible || compareSelectorVisible})}/>
-        <TrackContainer recentViewedListings={recentViewedListings}
-                        expanded={trackContainerVisible}
-                        onToggle={this.toggleTrackContainer}/>
-        <ListingCompareSelector
-          listing={listing}
-          listingB={listingB}
-          expanded={compareSelectorVisible}
-          onToggle={this.toggleCompareSelector}
-          onListingBSelected={(name) => this.setState({
-            listingB: TestData.find(x => x.name === name)
-          })}/>
       </div>
     )
   }

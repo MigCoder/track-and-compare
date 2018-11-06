@@ -1,18 +1,26 @@
 import * as React from 'react'
 import { ListingItem } from '../components/listing.item/listing.item'
-import { Listing } from '../models/listing'
+import { TestData } from '../database/test.data'
+import './listings.scss'
 
-type Props = {
-  listings: Listing[]
-}
-
-export class Listings extends React.Component<Props> {
+export class Listings extends React.Component {
   public render() {
-    const {listings} = this.props
-
     return (
-      listings.map((listing, index) =>
-        <ListingItem key={index} listing={listing}/>)
+      <div className='listings'>
+        <div className="filters">
+          <select>
+            <option value="1">Property Type</option>
+          </select>
+          <select>
+            <option value="1">Size</option>
+          </select>
+          <select>
+            <option value="1">Price</option>
+          </select>
+        </div>
+        {TestData.map((listing, index) =>
+          <ListingItem key={index} listing={listing}/>)}
+      </div>
     )
   }
 }

@@ -12,6 +12,7 @@ type Props = {
   onDragStart?: () => void
   onDragEnd?: (listing?: Listing) => void
   onListingFulfilled?: (listing: Listing) => void
+  onListingClear?: () => void
 }
 
 type State = {
@@ -95,11 +96,16 @@ export class ListingCard extends React.Component<Props, State> {
 
   public render() {
     const {dragActive} = this.state
-    const {listing} = this.props
+    const {listing, draggable} = this.props
 
     if (listing && !dragActive) {
       return (
         <div className='card listing-card' ref={ref => this.cardRef = ref}>
+          {
+            !draggable &&
+            <i className='fa fa-times-circle'
+               onClick={() => this.props.onListingClear!()}/>
+          }
           <img src={listing.medias[0]} alt={listing.name}/>
           <div className="info">
             <h3>{listing.name}</h3>

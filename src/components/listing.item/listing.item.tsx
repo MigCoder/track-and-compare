@@ -1,4 +1,6 @@
 import * as React from 'react'
+import { Link } from 'react-router-dom'
+import { convertNameToUrl } from '../../common/helper'
 import { Listing } from '../../models/listing'
 import './listing.item.scss'
 
@@ -11,14 +13,15 @@ export class ListingItem extends React.Component<Props> {
     const {listing} = this.props
 
     return (
-      <div className='listing-item border border-4'>
+      <Link className='listing-item border border-4 shadow shadow-hover'
+      to={convertNameToUrl(`listings/${listing.name}`)}>
         <img src={listing.medias[0]} alt={listing.name}/>
         <div className="info">
           <h2>{listing.name}</h2>
           <div>Size: {listing.size}ft²</div>
           <div>Budget: ${listing.price}</div>
         </div>
-      </div>
+      </Link>
     )
   }
 }

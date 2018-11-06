@@ -21,6 +21,17 @@
     color: white;
     background: rgba(0, 0, 0, .2);
   }
+
+  i {
+    position: absolute;
+    top: -2rem;
+    right: -2rem;
+    color: red;
+    font-size: 40px;
+    z-index: 1;
+    border-radius: 40px;
+    background: black;
+  }
 }
 
 .listing-card-place-holder {
@@ -31,6 +42,6 @@
 
   &.drag-active {
     border-color: red;
-    box-shadow: 15px 28px 25px -18px rgba(0,0,0,.2);
+    box-shadow: 15px 28px 25px -18px rgba(0, 0, 0, .2);
   }
 }

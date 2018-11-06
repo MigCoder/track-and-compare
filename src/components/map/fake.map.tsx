@@ -1,6 +1,5 @@
 import * as React from 'react'
 import GoogleMapReact, { Coords } from 'google-map-react'
-import ShadowDOM from 'react-shadow'
 
 const AnyReactComponent = ({text}: { text: string }) => <div>{text}</div>
 
@@ -20,19 +19,17 @@ export class FakeMap extends React.Component<Props> {
 
   public render() {
     return (
-      <ShadowDOM>
-        <div style={{height: '200px', width: '100%', zIndex: -1}}>
-          <GoogleMapReact
-            key='AIzaSyBMqz4ueWMfGGqdXlvwE_cIVfar60GROi8'
-            defaultCenter={this.props.center}
-            defaultZoom={this.props.zoom}
-          >
-            <AnyReactComponent
-              text={'Kreyser Avrora'}
-            />
-          </GoogleMapReact>
-        </div>
-      </ShadowDOM>
+      <div style={{height: '200px', width: '100%', zIndex: -1}}>
+        <GoogleMapReact
+          key='AIzaSyBMqz4ueWMfGGqdXlvwE_cIVfar60GROi8'
+          defaultCenter={this.props.center}
+          defaultZoom={this.props.zoom}
+        >
+          <AnyReactComponent
+            text={'Kreyser Avrora'}
+          />
+        </GoogleMapReact>
+      </div>
     )
   }
 }

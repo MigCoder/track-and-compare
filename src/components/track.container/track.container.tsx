@@ -1,6 +1,8 @@
 import * as React from 'react'
 import { findDOMNode } from 'react-dom'
 import { Motion, presets, spring } from 'react-motion'
+import { Subscription } from 'rxjs'
+import { RecentViewedListings } from '../../database/recent.viewed.listings'
 import { Listing } from '../../models/listing'
 import { ListingCard } from '../listing.card/listing.card'
 import classNames from 'classnames'
@@ -8,31 +10,38 @@ import './track.container.scss'
 
 type Props = {
   expanded: boolean
-  recentViewedListings: Listing[]
   onToggle?: () => void
   toggleDragging?: (dragging: boolean) => void
 }
 
 type State = {
+  recentViewedListings: Listing[]
   containerHeight: number
   draggingListing: boolean
 }
 
 export class TrackContainer extends React.Component<Props, State> {
-
   public state = {
     expanded: false,
     containerHeight: 0,
-    draggingListing: false
+    draggingListing: false,
+    recentViewedListings: []
   }
 
   private containerRef: any
+  private subscription: Subscription
 
   public componentDidMount() {
     const container = findDOMNode(this.containerRef) as HTMLElement
     this.setState({
       containerHeight: container.getBoundingClientRect().height
     })
+    this.subscription = RecentViewedListings.listings
+      .subscribe(listings => this.setState({recentViewedListings: listings}))
+  }
+
+  public componentWillUnmount() {
+    this.subscription.unsubscribe()
   }
 
   public toggle = () => {
@@ -62,16 +71,21 @@ export class TrackContainer extends React.Component<Props, State> {
   }
 
   public render() {
-    const {containerHeight, draggingListing} = this.state
-    const {expanded, recentViewedListings = []} = this.props
+    const {draggingListing, recentViewedListings} = this.state
+    const {expanded} = this.props
     return (
-      <Motion style={{offsetY: spring(expanded ? 0 : -containerHeight + 50, presets.wobbly)}}>
+      <Motion style={{
+        offsetY: spring(expanded ? 0 : -85, presets.wobbly)
+      }}>
         {
           ({offsetY}) =>
             <div className='track-container border border-3'
-                 style={{transform: `translateY(${offsetY}px)`}}
+                 style={{transform: `translateY(${offsetY}%)`}}
                  ref={ref => this.containerRef = ref}>
-              <h2>Your track</h2>
+              <div className='d-flex justify-content-between'>
+                <h2>Your track</h2>
+                <button onClick={RecentViewedListings.clear}>Clear</button>
+              </div>
               <div className={classNames('listing-cards', 'd-inline-flex', 'flex-nowrap', {
                 dragging: draggingListing
               })}>

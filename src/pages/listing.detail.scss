@@ -1,7 +1,11 @@
 @import '../styles/mixins';
 
 .listing-detail {
-  padding: 6rem 0;
+  & > a {
+    display: inline-block;
+    margin: 0 auto 0 15%;
+  }
+
   & > img, .detail-container {
     margin: 0 auto;
     display: block;
@@ -24,19 +28,6 @@
     }
 
     .contact-agent {
-    }
-  }
-
-  .mask {
-    position: fixed;
-    transition: background-color .3s;
-
-    &.show {
-      left: 0;
-      right: 0;
-      top: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, .5);
     }
   }
 }
