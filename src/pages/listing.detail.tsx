@@ -31,6 +31,13 @@ export class ListingDetail extends React.Component<Props, State> {
     document.body.scrollTo(0, 0)
   }
 
+  public componentWillReceiveProps(nextProps: Props){
+    if(nextProps.match!.params.name !== this.props.match!.params.name) {
+      const listing = TestData.find(x => convertNameToUrl(x.name) === nextProps.match!.params.name)!
+      this.setState({listing})
+    }
+  }
+
   public render() {
     const {listing} = this.state
     return (
