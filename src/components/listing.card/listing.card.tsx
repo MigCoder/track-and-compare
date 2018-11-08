@@ -1,6 +1,8 @@
 import * as React from 'react'
 import classNames from 'classnames'
 import { findDOMNode } from 'react-dom'
+import { Link } from 'react-router-dom'
+import { convertNameToUrl } from '../../common/helper'
 import { getListingByName } from '../../database/test.data'
 import { Listing } from '../../models/listing'
 import './listing.card.scss'
@@ -17,12 +19,14 @@ type Props = {
 
 type State = {
   dragActive: boolean
+  dragging: boolean
 }
 
 export class ListingCard extends React.Component<Props, State> {
 
   public state = {
-    dragActive: false
+    dragActive: false,
+    dragging: false
   }
   private cardRef: any
   private cardPlaceholderRef: any
@@ -56,6 +60,7 @@ export class ListingCard extends React.Component<Props, State> {
             card.setAttribute('listingId', this.props.listing!.name)
             card.style.zIndex = '9999'
             card.style.transition = `none`
+            this.setState({dragging: true})
           },
           onend: () => {
             setTimeout(() => {
@@ -68,6 +73,9 @@ export class ListingCard extends React.Component<Props, State> {
             card.style.transition = `all .3s`
             card.setAttribute('data-x', '0')
             card.setAttribute('data-y', '0')
+            setTimeout(() => {
+              this.setState({dragging: false})
+            })
           },
           onmove: dragMoveListener,
         })
@@ -99,8 +107,16 @@ export class ListingCard extends React.Component<Props, State> {
     const {listing, draggable} = this.props
 
     if (listing && !dragActive) {
-      return (
-        <div className='card listing-card' ref={ref => this.cardRef = ref}>
+      const classNames = `card listing-card`
+
+      const container = draggable ?
+        <Link className={classNames}
+              to={convertNameToUrl(`/listings/${listing.name}`)}
+              ref={ref => this.cardRef = ref}
+              onClick={(event) => this.state.dragging && event.preventDefault()}/> :
+        <div className={classNames} ref={ref => this.cardRef = ref}/>
+      return React.cloneElement(container, {
+        children: <React.Fragment>
           {
             !draggable &&
             <i className='fa fa-times-circle'
@@ -111,8 +127,8 @@ export class ListingCard extends React.Component<Props, State> {
             <h3>{listing.name}</h3>
             <div>${listing.price}</div>
           </div>
-        </div>
-      )
+        </React.Fragment>
+      })
     } else {
       return (
         <div className={classNames('listing-card-place-holder border-dashed border-thick', {
