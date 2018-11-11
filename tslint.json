@@ -10,7 +10,9 @@
     "ordered-imports": false,
     "no-console": false,
     "jsx-no-lambda": false,
-    "no-shadowed-variable": false
+    "no-shadowed-variable": false,
+    "jsx-boolean-value": false,
+    "array-type": false
   },
   "jsRules": {
     "no-console": false

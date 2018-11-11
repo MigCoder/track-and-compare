@@ -1,0 +1,17 @@
+.listing-row {
+  display: flex;
+  border-top: dashed 2px black;
+  border-top-left-radius: 255px 15px;
+  .fa.fa-thumbtack {
+    padding: 2rem 2rem 0 2rem;
+    cursor: pointer;
+    color: rgba(0, 0, 0, .1);
+    border-right: dashed 2px black;
+    &.pinned {
+      color: black
+    }
+  }
+  ul {
+    flex: 1;
+  }
+}

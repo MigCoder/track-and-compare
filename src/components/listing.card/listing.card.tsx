@@ -122,7 +122,7 @@ export class ListingCard extends React.Component<Props, State> {
             <i className='fa fa-times-circle'
                onClick={() => this.props.onListingClear!()}/>
           }
-          <img src={listing.medias[0]} alt={listing.name}/>
+          <img src={listing.picture} alt={listing.name}/>
           <div className="info">
             <h3>{listing.name}</h3>
             <div>${listing.price}</div>

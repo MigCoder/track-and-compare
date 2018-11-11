@@ -72,3 +72,13 @@ button {
   }
 }
 
+ul {
+  margin-bottom: 0;
+  padding-inline-start: 0;
+  li {
+    &:before {
+      content: '';
+    }
+  }
+}
+

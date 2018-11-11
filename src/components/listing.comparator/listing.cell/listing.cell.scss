@@ -1,0 +1,11 @@
+.listing-cell {
+  img {
+    max-height: 30vh;
+    margin: 0 auto;
+    display: block;
+  }
+
+  &.highlight {
+    color: #db4c3f;
+  }
+}

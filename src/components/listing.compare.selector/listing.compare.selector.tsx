@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { findDOMNode } from 'react-dom'
 import { Motion, presets, spring } from 'react-motion'
+import { TestData } from '../../database/test.data'
 import { Listing } from '../../models/listing'
 import { ListingCard } from '../listing.card/listing.card'
 import './listing.compare.selector.scss'
@@ -86,8 +87,11 @@ export class ListingCompareSelector extends React.Component<Props> {
               </div>
           }
         </Motion>
-        <ListingComparator visible={comparatorVisible}
-                           listings={compareCards.filter(x => !!x) as any}
+        {/*<ListingComparator visible={comparatorVisible}*/}
+                           {/*listings={compareCards.filter(x => !!x) as any}*/}
+                           {/*onClose={() => this.toggleComparator(false)}/>*/}
+        <ListingComparator visible={!comparatorVisible}
+                           listings={[TestData[0], TestData[1], TestData[2]]}
                            onClose={() => this.toggleComparator(false)}/>
       </React.Fragment>
     )

@@ -5,5 +5,5 @@ export class Listing {
   public address?: string;
   public developer?: string;
   public features?: string[] = [];
-  public medias: string[] = [];
+  public picture: string;
 }

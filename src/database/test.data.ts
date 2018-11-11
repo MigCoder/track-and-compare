@@ -17,37 +17,37 @@ export const TestData: Listing[] = [
       'Pet friendly',
       'Cloak room'
     ],
-    medias: [img1]
+    picture: img1
   },
   {
     name: 'Property B',
-    price: 5000,
-    size: 2000,
+    price: 2500,
+    size: 3000,
     features: [
       'Pet friendly',
       'Cloak room'
     ],
-    medias: [img2]
+    picture: img2
   },
   {
     name: 'Property C',
-    price: 5000,
-    size: 2000,
+    price: 4500,
+    size: 1500,
     features: [
       'Pet friendly',
       'Cloak room'
     ],
-    medias: [img3]
+    picture: img3
   },
   {
     name: 'Property D',
-    price: 5000,
-    size: 2000,
+    price: 8000,
+    size: 9000,
     features: [
       'Pet friendly',
       'Cloak room'
     ],
-    medias: [img4]
+    picture: img4
   },
   {
     name: 'Property E',
@@ -57,7 +57,7 @@ export const TestData: Listing[] = [
       'Pet friendly',
       'Cloak room'
     ],
-    medias: [img5]
+    picture: img5
   },
   {
     name: 'Property F',
@@ -67,7 +67,7 @@ export const TestData: Listing[] = [
       'Pet friendly',
       'Cloak room'
     ],
-    medias: [img6]
+    picture: img6
   }
 ]
 

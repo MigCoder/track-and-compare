@@ -45,7 +45,7 @@ export class ListingDetail extends React.Component<Props, State> {
         <Link to='/'>
           <button className="paper-btn">{'< Back'}</button>
         </Link>
-        <img src={listing.medias![0]} alt={listing.name}/>
+        <img src={listing.picture} alt={listing.name}/>
         <div className='detail-container'>
           <div className='basic-info'>
             <h1>{listing.name}</h1>
