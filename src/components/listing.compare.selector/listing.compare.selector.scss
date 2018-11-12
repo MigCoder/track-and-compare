@@ -1,3 +1,5 @@
+@import "../../styles/mixins";
+
 .listing-compare-selector {
   padding: 6rem 3rem 3rem;
   position: fixed;
@@ -7,7 +9,7 @@
   height: 50vh;
   background-color: white;
   z-index: 1;
-  box-shadow:  0 0 10px -2px rgba(0,0,0,0.75);
+  box-shadow: 0 0 10px -2px rgba(0, 0, 0, 0.75);
 
   .listing-cards {
     width: 100%;
@@ -37,5 +39,17 @@
   button {
     display: block;
     margin: 0 auto;
+  }
+
+  @include phone {
+    .listing-cards {
+      .listing-card, .listing-card-place-holder {
+        height: 8vh;
+        width: 50vh;
+        max-width: 50vh;
+        line-height: 8vh;
+        margin-bottom: 1rem;
+      }
+    }
   }
 }

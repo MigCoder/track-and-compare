@@ -1,3 +1,5 @@
+@import "../../styles/mixins";
+
 .listing-item {
   display: flex;
   margin-bottom: 2rem;
@@ -24,6 +26,13 @@
     margin-left: 2rem;
     div {
       margin-top: 1rem;
+    }
+  }
+
+  @include phone {
+    flex-wrap: wrap;
+    img {
+      width: 100%;
     }
   }
 }
