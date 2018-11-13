@@ -8,6 +8,7 @@
   margin-right: 2rem;
   position: relative;
   text-shadow: 2px 1px 1px #000000;
+  touch-action: none;
   img {
     height: 172px;
     max-width: 100%;
@@ -41,6 +42,7 @@
   width: 300px;
   text-align: center;
   line-height: 172px;
+  touch-action: none;
 
   &.drag-active {
     border-color: red;

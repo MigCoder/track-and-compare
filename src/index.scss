@@ -45,11 +45,6 @@ a {
   }
 }
 
-* {
-  -ms-touch-action: none;
-  touch-action: none;
-}
-
 button {
   &:focus, &:active {
     outline: none;
