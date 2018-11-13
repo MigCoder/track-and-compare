@@ -107,14 +107,14 @@ export class ListingCard extends React.Component<Props, State> {
     const {listing, draggable} = this.props
 
     if (listing && !dragActive) {
-      const classNames = `card listing-card`
+      const classes = classNames(`card listing-card`, {draggable})
 
       const container = draggable ?
-        <Link className={classNames}
+        <Link className={classes}
               to={convertNameToUrl(`/listings/${listing.name}`)}
               ref={ref => this.cardRef = ref}
               onClick={(event) => this.state.dragging && event.preventDefault()}/> :
-        <div className={classNames} ref={ref => this.cardRef = ref}/>
+        <div className={classes} ref={ref => this.cardRef = ref}/>
       return React.cloneElement(container, {
         children: <React.Fragment>
           {

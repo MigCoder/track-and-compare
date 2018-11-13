@@ -9,6 +9,9 @@
   position: relative;
   text-shadow: 2px 1px 1px #000000;
   touch-action: none;
+  &.draggable {
+    touch-action: auto;
+  }
   img {
     height: 172px;
     max-width: 100%;
