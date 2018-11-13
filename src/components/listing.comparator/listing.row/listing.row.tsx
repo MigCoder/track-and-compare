@@ -16,18 +16,11 @@ type Props = {
 
 export class ListingRow extends React.Component<Props> {
   public componentDidMount() {
-    const {rowData: {name, cells}} = this.props
+    this.highlighCells(this.props)
+  }
 
-    const advancedValue = this.getAdvancedCellValue(name, cells)
-    if (advancedValue) {
-      cells.forEach(cell => {
-        if (cell.value === advancedValue) {
-          cell.highlight = true
-        }
-      })
-    }
-
-    this.forceUpdate()
+  public componentWillReceiveProps(nextProps: Props) {
+    this.highlighCells(nextProps)
   }
 
   public render() {
@@ -55,5 +48,20 @@ export class ListingRow extends React.Component<Props> {
     }
 
     return null
+  }
+
+  private highlighCells(props: Props) {
+    const {rowData: {name, cells}} = props
+
+    const advancedValue = this.getAdvancedCellValue(name, cells)
+    if (advancedValue) {
+      cells.forEach(cell => {
+        if (cell.value === advancedValue) {
+          cell.highlight = true
+        }
+      })
+    }
+
+    this.forceUpdate()
   }
 }

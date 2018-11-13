@@ -8,4 +8,13 @@
   &.highlight {
     color: #db4c3f;
   }
+
+  .value {
+    .tag {
+      display: inline-block;
+      border-radius: 20px;
+      padding: 0 2rem;
+      margin-right: 2rem;
+    }
+  }
 }
